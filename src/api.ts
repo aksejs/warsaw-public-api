@@ -1,27 +1,29 @@
 import axios, { AxiosInstance } from "axios";
 import * as rax from "retry-axios";
+import { TransportService } from "./services/transportService";
 
-import { Culture } from "./culture/culture";
-
-export const API_URL = "https://api.um.warszawa.pl/api/action/";
+export const API_URL = "https://test.com/api/action";
 
 export type WarsawPublicApiOptions = {
-  token: string;
+  apiKey: string;
 };
 
 export class WarsawPublicApi {
   private readonly axiosInstance: AxiosInstance;
   options: Required<WarsawPublicApiOptions>;
 
-  public cultureApi: Culture
+  public transportApi: TransportService;
 
   constructor(options: WarsawPublicApiOptions) {
     this.options = options;
     this.axiosInstance = axios.create({
       baseURL: API_URL,
+      params: {
+        apiKey: this.options.apiKey,
+      },
     });
     rax.attach(this.axiosInstance);
 
-    this.cultureApi = new Culture(this.axiosInstance, this.options.token)
+    this.transportApi = new TransportService(this.axiosInstance);
   }
 }
