@@ -31,3 +31,8 @@ export type GeoParams = RequireAtLeastOne<
   },
   "bbox" | "circle" | "filter" | "limit"
 >;
+
+export type Field = {
+  type: string;
+  id: string;
+};

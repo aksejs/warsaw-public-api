@@ -1,5 +1,12 @@
-import { AxiosInstance, AxiosRequestConfig } from "axios";
-import { GeoParams, Geometry, Value } from "../utils/types";
+import { AxiosRequestConfig } from "axios";
+import { Value } from "../utils/types";
+import { BaseService } from "../utils/helpers";
+import {
+  DBStoreBaseRequest,
+  WFSStoreBaseRequest,
+  dbstoreBaseHandler,
+  wfsstoreBaseHandler,
+} from "../utils/handlers";
 
 export enum ZTMTimetableIDS {
   STOPS = "b27f4c17-5c50-4a5b-89dd236b282bc499",
@@ -21,7 +28,6 @@ export enum StopsIDS {
 
 interface ZTMTimetableRequest extends Partial<AxiosRequestConfig> {
   params: {
-    id: ZTMTimetableIDS;
     name?: string;
     busstopId?: string;
     busstopNr?: string;
@@ -33,26 +39,6 @@ interface ZTMTimetableResponse {
   result: Array<{
     values: Value[];
   }>;
-}
-
-interface TransportRequest extends Partial<AxiosRequestConfig> {
-  params: {
-    id: TransportIDS;
-  } & GeoParams;
-}
-
-interface TransportResponse {
-  data: {
-    geometry: Geometry;
-  };
-}
-
-interface StopsRequest extends Partial<AxiosRequestConfig> {
-  params: {
-    id: StopsIDS;
-    page?: number;
-    size?: number;
-  };
 }
 
 interface UrbanTransportRoutesResponse {
@@ -85,33 +71,83 @@ interface DictionaryResponse {
   };
 }
 
-export class TransportService {
-  private axiosInstance: AxiosInstance;
-
-  constructor(axiosInstance: AxiosInstance) {
-    this.axiosInstance = axiosInstance;
+export class TransportService extends BaseService {
+  public getTimetableStops(request: ZTMTimetableRequest) {
+    return this.axiosInstance.get("/action/dbtimetable_get", {
+      ...request,
+      params: {
+        ...request.params,
+        id: ZTMTimetableIDS.STOPS,
+      },
+    }) as Promise<ZTMTimetableResponse>;
   }
 
-  public getTimetable(
-    requestParams: ZTMTimetableRequest
-  ): Promise<ZTMTimetableResponse> {
-    return this.axiosInstance.get(
-      "/action/dbtimetable_get",
-      requestParams
-    ) as Promise<ZTMTimetableResponse>;
+  public getTimetableLines(request: ZTMTimetableRequest) {
+    return this.axiosInstance.get("/action/dbtimetable_get", {
+      ...request,
+      params: {
+        ...request.params,
+        id: ZTMTimetableIDS.LINES,
+      },
+    }) as Promise<ZTMTimetableResponse>;
   }
 
-  public getTransport(
-    requestParams: TransportRequest
-  ): Promise<TransportResponse> {
-    return this.axiosInstance.get(
-      "/wfsstore_get",
-      requestParams
-    ) as Promise<TransportResponse>;
+  public getTimetableSchedules(request: ZTMTimetableRequest) {
+    return this.axiosInstance.get("/action/dbtimetable_get", {
+      ...request,
+      params: {
+        ...request.params,
+        id: ZTMTimetableIDS.SCHEDULES,
+      },
+    }) as Promise<ZTMTimetableResponse>;
   }
 
-  public getStops(requestParams: StopsRequest) {
-    return this.axiosInstance.get("/action/dbstore_get", requestParams);
+  public getTransportBikeStations(request: WFSStoreBaseRequest) {
+    return wfsstoreBaseHandler(
+      this.axiosInstance,
+      request,
+      TransportIDS.BIKE_STATIONS
+    );
+  }
+
+  public getTransportBikeRoutes(request: WFSStoreBaseRequest) {
+    return wfsstoreBaseHandler(
+      this.axiosInstance,
+      request,
+      TransportIDS.BIKE_ROUTES
+    );
+  }
+
+  public getTransportParkings(request: WFSStoreBaseRequest) {
+    return wfsstoreBaseHandler(
+      this.axiosInstance,
+      request,
+      TransportIDS.PARKINGS
+    );
+  }
+
+  public getTransportMetroEntrances(request: WFSStoreBaseRequest) {
+    return wfsstoreBaseHandler(
+      this.axiosInstance,
+      request,
+      TransportIDS.METRO_ENTRANCES
+    );
+  }
+
+  public getStopsCoords(request: DBStoreBaseRequest) {
+    return dbstoreBaseHandler(
+      this.axiosInstance,
+      request,
+      StopsIDS.STOPS_COORDS
+    );
+  }
+
+  public getStopsCurrent(request: DBStoreBaseRequest) {
+    return dbstoreBaseHandler(
+      this.axiosInstance,
+      request,
+      StopsIDS.STOP_COORDS_FOR_CURRENT_DAY
+    );
   }
 
   public getUrbanTransportRoutes(): Promise<UrbanTransportRoutesResponse> {
