@@ -14,7 +14,7 @@ export interface TheatresServiceRequest extends Partial<AxiosRequestConfig> {
 }
 
 export class CultureService extends BaseService {
-  public getTheatres(requestParams: TheatresServiceRequest) {
+  public getTheatres(requestParams: GeoParams) {
     return wfsstoreBaseHandler(
       this.axiosInstance,
       requestParams,

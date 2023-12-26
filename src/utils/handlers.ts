@@ -1,9 +1,7 @@
 import { AxiosInstance, AxiosRequestConfig } from "axios";
 import { GeoParams, Geometry } from "./types";
 
-export interface WFSStoreBaseRequest extends Partial<AxiosRequestConfig> {
-  params: GeoParams;
-}
+export type WFSStoreBaseRequest = GeoParams;
 
 export interface WFSStoreBaseResponse {
   data: {
@@ -41,16 +39,15 @@ export interface DataStorageBaseResponse<T> {
 
 export function wfsstoreBaseHandler(
   axiosInstance: AxiosInstance,
-  request: WFSStoreBaseRequest,
+  params: WFSStoreBaseRequest,
   id: string
-): Promise<WFSStoreBaseResponse> {
-  return axiosInstance.get("/action/wfsstore_get/", {
-    ...request,
+) {
+  return axiosInstance.get<WFSStoreBaseResponse>("/action/wfsstore_get", {
     params: {
-      ...request.params,
+      ...params,
       id,
     },
-  }) as Promise<WFSStoreBaseResponse>;
+  });
 }
 
 export function dbstoreBaseHandler(

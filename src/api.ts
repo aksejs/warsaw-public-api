@@ -1,5 +1,6 @@
-import axios, { AxiosInstance } from "axios";
+import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
 import * as rax from "retry-axios";
+
 import { TransportService } from "./services/transportService";
 import { EducationService } from "./services/educationService";
 import { EcologyService } from "./services/ecologyService";
@@ -7,16 +8,29 @@ import { SatelliteDataService } from "./services/satelliteDataService";
 import { GovernmentService } from "./services/governmentService";
 import { SafetyService } from "./services/safetyService";
 import { CultureService } from "./services/cultureService";
+import { HttpsAgent } from "agentkeepalive";
+import { RealtimeService } from "./services/realtimeService";
 
-export const API_URL = "https://test.com/api/action";
+export const API_URL = "https://api.um.warszawa.pl/api";
 
 export type WarsawPublicApiOptions = {
-  apiKey: string;
+  apikey: string;
+  axiosInstance?: AxiosInstance;
+  config?: AxiosRequestConfig;
+};
+
+export const defaultHttpsAgent = new HttpsAgent({ keepAlive: true });
+export const defaultTimeout = 10000;
+
+const defaultConfig: AxiosRequestConfig = {
+  timeout: defaultTimeout,
+  httpsAgent: defaultHttpsAgent,
 };
 
 export class WarsawPublicApi {
   private readonly axiosInstance: AxiosInstance;
-  options: Required<WarsawPublicApiOptions>;
+
+  protected _apikey: string;
 
   public transportApi!: TransportService;
   public educationApi!: EducationService;
@@ -25,16 +39,33 @@ export class WarsawPublicApi {
   public governmentApi!: GovernmentService;
   public safetyApi!: SafetyService;
   public cultureApi!: CultureService;
+  public realtimeApi!: RealtimeService;
 
   constructor(options: WarsawPublicApiOptions) {
-    this.options = options;
-    this.axiosInstance = axios.create({
-      baseURL: API_URL,
-      params: {
-        apiKey: this.options.apiKey,
-      },
-    });
-    rax.attach(this.axiosInstance);
+    let { axiosInstance, config, apikey } = options;
+    this._apikey = apikey;
+
+    if (axiosInstance) {
+      axiosInstance.defaults.params = {
+        ...axiosInstance.defaults.params,
+        apikey,
+      };
+      this.axiosInstance = axiosInstance;
+    } else if (config) {
+      config = { ...defaultConfig, ...config };
+      config.params = { ...config.params, apikey };
+      config.headers = { ...defaultConfig.headers, ...(config.headers || {}) };
+      this.axiosInstance = axios.create(config);
+      rax.attach(this.axiosInstance);
+    } else {
+      this.axiosInstance = axios.create({
+        ...defaultConfig,
+        params: {
+          apikey,
+        },
+      });
+      rax.attach(this.axiosInstance);
+    }
 
     this.transportApi = new TransportService(this.axiosInstance);
     this.educationApi = new EducationService(this.axiosInstance);
@@ -43,5 +74,14 @@ export class WarsawPublicApi {
     this.governmentApi = new GovernmentService(this.axiosInstance);
     this.safetyApi = new SafetyService(this.axiosInstance);
     this.cultureApi = new CultureService(this.axiosInstance);
+    this.realtimeApi = new RealtimeService(this.axiosInstance);
+  }
+
+  getApikey() {
+    return this._apikey;
+  }
+
+  getInstanceDefaults() {
+    return this.axiosInstance.defaults;
   }
 }

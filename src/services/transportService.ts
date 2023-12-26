@@ -150,15 +150,15 @@ export class TransportService extends BaseService {
     );
   }
 
-  public getUrbanTransportRoutes(): Promise<UrbanTransportRoutesResponse> {
-    return this.axiosInstance.get(
+  public getUrbanTransportRoutes() {
+    return this.axiosInstance.get<UrbanTransportRoutesResponse>(
       "/action/public_transport_routes"
-    ) as Promise<UrbanTransportRoutesResponse>;
+    );
   }
 
-  public getDictionary(): Promise<DictionaryResponse> {
-    return this.axiosInstance.get(
+  public getDictionary() {
+    return this.axiosInstance.get<DictionaryResponse>(
       "/action/public_transport_dictionary"
-    ) as Promise<DictionaryResponse>;
+    );
   }
 }
