@@ -1,19 +1,18 @@
 import { AxiosInstance, AxiosRequestConfig } from "axios";
-import { GeoParams, Geometry } from "./types";
+import { GeoParams, Geometry, WFSStoreBaseResponse } from "./types";
 
 export type WFSStoreBaseRequest = GeoParams;
 
-export interface WFSStoreBaseResponse {
-  data: {
-    geometry: Geometry;
-  };
+export interface DBStoreBaseRequest extends Partial<AxiosRequestConfig> {
+  page?: number;
+  size?: number;
+  limit?: number;
 }
 
-export interface DBStoreBaseRequest extends Partial<AxiosRequestConfig> {
-  params: {
-    page?: number;
-    size?: number;
-  };
+export interface DBStoreBaseResponse {
+  result: Array<{
+    values: Array<{ id: string; name: string }>;
+  }>;
 }
 
 export interface DataStorageBaseRequest extends Partial<AxiosRequestConfig> {
@@ -37,12 +36,12 @@ export interface DataStorageBaseResponse<T> {
   };
 }
 
-export function wfsstoreBaseHandler(
+export function wfsstoreBaseHandler<T = WFSStoreBaseResponse>(
   axiosInstance: AxiosInstance,
   params: WFSStoreBaseRequest,
   id: string
 ) {
-  return axiosInstance.get<WFSStoreBaseResponse>("/action/wfsstore_get", {
+  return axiosInstance.get<T>("/action/wfsstore_get", {
     params: {
       ...params,
       id,
@@ -52,13 +51,12 @@ export function wfsstoreBaseHandler(
 
 export function dbstoreBaseHandler(
   axiosInstance: AxiosInstance,
-  request: DBStoreBaseRequest,
-  id: string
+  id: string,
+  request?: DBStoreBaseRequest
 ) {
-  return axiosInstance.get("/", {
-    ...request,
+  return axiosInstance.get<DBStoreBaseResponse>("/action/dbstore_get", {
     params: {
-      ...request.params,
+      ...request,
       id,
     },
   });

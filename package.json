@@ -31,6 +31,7 @@
     "axios": "^1.6.2",
     "axios-debug-log": "^1.0.0",
     "axios-logger": "^2.7.1",
+    "dotenv": "^16.3.1",
     "retry-axios": "^3.1.3"
   }
 }

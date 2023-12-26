@@ -16,7 +16,7 @@ export type RequireAtLeastOne<T, Keys extends keyof T = keyof T> = Pick<
     [K in Keys]-?: Required<Pick<T, K>> & Partial<Pick<T, Exclude<Keys, K>>>;
   }[Keys];
 
-export interface Geometry {
+export interface IGeometry {
   type: string;
   coordinates: LatLngLiteral;
   properties: Value[];
@@ -36,6 +36,44 @@ export type Field = {
   type: string;
   id: string;
 };
+
+interface FeatureMemberProperties {
+  TEL_FAX?: string;
+  WWW: string;
+  JEDN_ADM: string;
+  AKTU_DAN: string;
+  OBJECTID: string;
+  NUMER: string;
+  KOD: string;
+  OPIS: string;
+  DZIELNICA: string;
+  MAIL?: string;
+  ULICA: string;
+}
+
+export interface Geometry {
+  type: string;
+  coordinates: Array<{ latitude: string; longitude: string }>;
+}
+
+interface Property {
+  value: string;
+  key: string;
+}
+
+interface FeatureMemberList {
+  geometry: Geometry;
+  properties: Property[];
+}
+
+export interface WFSStoreBaseResponse {
+  result: {
+    featureMemberProperties: FeatureMemberProperties[];
+    featureMemberList: FeatureMemberList[];
+    featureMemberCoordinates: Array<{ latitude: string; longitude: string }>;
+    featureMemberPropertyKey: string[];
+  };
+}
 
 export enum RESOURCE_IDS {
   INTERNET_ACCESS = "0a131e16-ec7f-4502-9b62-8f8af58d8cfd",
