@@ -26,13 +26,11 @@ export enum StopsIDS {
   STOP_COORDS_FOR_CURRENT_DAY = "ab75c33d-3a26-4342-b36a-6e5fef0a3ac3",
 }
 
-interface ZTMTimetableRequest extends Partial<AxiosRequestConfig> {
-  params: {
-    name?: string;
-    busstopId?: string;
-    busstopNr?: string;
-    line?: string;
-  };
+interface ZTMTimetableRequest {
+  name?: string;
+  busstopId?: number;
+  busstopNr?: string;
+  line?: number;
 }
 
 interface ZTMTimetableResponse {
@@ -73,33 +71,39 @@ interface DictionaryResponse {
 
 export class TransportService extends BaseService {
   public getTimetableStops(request: ZTMTimetableRequest) {
-    return this.axiosInstance.get("/action/dbtimetable_get", {
-      ...request,
-      params: {
-        ...request.params,
-        id: ZTMTimetableIDS.STOPS,
-      },
-    }) as Promise<ZTMTimetableResponse>;
+    return this.axiosInstance.get<ZTMTimetableResponse>(
+      "/action/dbtimetable_get",
+      {
+        params: {
+          ...request,
+          id: ZTMTimetableIDS.STOPS,
+        },
+      }
+    );
   }
 
   public getTimetableLines(request: ZTMTimetableRequest) {
-    return this.axiosInstance.get("/action/dbtimetable_get", {
-      ...request,
-      params: {
-        ...request.params,
-        id: ZTMTimetableIDS.LINES,
-      },
-    }) as Promise<ZTMTimetableResponse>;
+    return this.axiosInstance.get<ZTMTimetableResponse>(
+      "/action/dbtimetable_get",
+      {
+        params: {
+          ...request,
+          id: ZTMTimetableIDS.LINES,
+        },
+      }
+    );
   }
 
   public getTimetableSchedules(request: ZTMTimetableRequest) {
-    return this.axiosInstance.get("/action/dbtimetable_get", {
-      ...request,
-      params: {
-        ...request.params,
-        id: ZTMTimetableIDS.SCHEDULES,
-      },
-    }) as Promise<ZTMTimetableResponse>;
+    return this.axiosInstance.get<ZTMTimetableResponse>(
+      "/action/dbtimetable_get",
+      {
+        params: {
+          ...request,
+          id: ZTMTimetableIDS.SCHEDULES,
+        },
+      }
+    );
   }
 
   public getTransportBikeStations(request: WFSStoreBaseRequest) {
@@ -134,19 +138,19 @@ export class TransportService extends BaseService {
     );
   }
 
-  public getStopsCoords(request: DBStoreBaseRequest) {
+  public getStopsCoords(request?: DBStoreBaseRequest) {
     return dbstoreBaseHandler(
       this.axiosInstance,
-      request,
-      StopsIDS.STOPS_COORDS
+      StopsIDS.STOPS_COORDS,
+      request
     );
   }
 
   public getStopsCurrent(request: DBStoreBaseRequest) {
     return dbstoreBaseHandler(
       this.axiosInstance,
-      request,
-      StopsIDS.STOP_COORDS_FOR_CURRENT_DAY
+      StopsIDS.STOP_COORDS_FOR_CURRENT_DAY,
+      request
     );
   }
 
