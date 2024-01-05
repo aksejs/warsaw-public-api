@@ -24,6 +24,7 @@ export interface IGeometry {
 
 export type WFSStoreBaseRequest = RequireAtLeastOne<
   {
+    /** {required} Api key to access */
     limit?: number;
     circle?: string;
     bbox?: string;

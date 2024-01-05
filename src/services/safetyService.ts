@@ -35,6 +35,12 @@ interface DefibrillatorLocationResponse {
 }
 
 export class SafetyService extends BaseService {
+  /**
+   * EN: Get difibrilators data
+   * PL: API umożliwia pobranie danych na temat defibratorów.
+   *
+   * https://api.um.warszawa.pl/files/aecdc237-e4d2-4cba-9285-1fddb2ad2d70.pdf
+   */
   public getDefibrillator(requestParams: DefibrillatorsRequest) {
     return this.axiosInstance.get<DefibrillatorLocationResponse>(
       "/action/aed_get",
@@ -46,6 +52,9 @@ export class SafetyService extends BaseService {
     );
   }
 
+  /**
+   * https://api.um.warszawa.pl/files/91a1b495-fb74-472e-9460-fe67cd807348.pdf
+   */
   public getPoliceDepartments(request: WFSStoreBaseRequest) {
     return wfsstoreBaseHandler(
       this.axiosInstance,

@@ -6,6 +6,8 @@
     "module": "ESNext",
     "moduleResolution": "node",
     "strict": true,
+    "declaration": true,
+    "declarationDir": "./dist",
     "useUnknownInCatchVariables": false,
     "forceConsistentCasingInFileNames": true,
     "allowSyntheticDefaultImports": true,

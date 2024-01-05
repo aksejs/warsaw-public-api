@@ -16,7 +16,7 @@ import {
 export const API_URL = "https://api.um.warszawa.pl/api";
 
 export type WarsawPublicApiOptions = {
-  //** {required} Api key to access */
+  /** {required} Api key to access */
   apikey: string;
   /** AxiosInstance to be used by client. Provide one of axiosInstance or config. */
   axiosInstance?: AxiosInstance;

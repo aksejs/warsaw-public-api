@@ -32,6 +32,15 @@ export class RealtimeService {
     this.realTimeInstance = axiosInstance;
   }
 
+  /**
+   * EN: Get current location of public transport
+   * Info updates every 10 seconds
+   * PL: API	udostępnia	aktualną	lokalizację	pojazdów	komunikacji	miejskiej
+   * Informacje	o	położeniu	pojazdów	komunikacji	miejskiej	
+   * aktualizowane	są	z	częstotliwością	10	sekund
+   * 
+   * https://api.um.warszawa.pl/files/9fae6f84-4c81-476e-8450-6755c8451ccf.pdf
+   */
   public getBussesAndTrams(
     request: BussesAndTramsRequest
   ): Promise<BussesAndTramsResponse> {

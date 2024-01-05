@@ -213,16 +213,34 @@ interface PublicConsultationsResponse {
 }
 
 export class GovernmentService extends BaseService {
+  /**
+   * EN: Get "urzads" locations
+   * PL: Zbiór danych udostępnia mapy wektorowe,
+   * w formie obiektów JSON z lokalizacją biur Urzędu Miasta.
+   *
+   * https://api.um.warszawa.pl/files/1590c3a8-eb00-400b-92db-7b5a57decb50.pdf
+   */
   public getUrzads(request: WFSStoreBaseRequest) {
     return wfsstoreBaseHandler(this.axiosInstance, request, WFS_IDS.URZADS);
   }
 
+  /**
+   * EN: Get 19115 categories
+   * PL: Pobranie informacji o kategoriach 19115
+   *
+   * https://api.um.warszawa.pl/files/7da29867-40cb-4d6a-b1cf-329cccfafa08.pdf
+   */
   public get19115Categories(
     request?: AxiosRequestConfig
   ): Promise<HotlineCategoriesResponse> {
     return this.axiosInstance.get("/action/19115v2_categories", request);
   }
 
+  /**
+   * PL: (POST) Pobranie listy zgłoszeń 19115
+   *
+   * https://api.um.warszawa.pl/files/7da29867-40cb-4d6a-b1cf-329cccfafa08.pdf
+   */
   public post19115Incidents(
     request?: HotlinePostIncidentsRequest
   ): Promise<HotlinePostIncidentsResponse> {
@@ -233,12 +251,23 @@ export class GovernmentService extends BaseService {
     );
   }
 
+  /**
+   * PL: (GET) Pobieranie zgłoszenia 19115
+   *
+   * https://api.um.warszawa.pl/files/7da29867-40cb-4d6a-b1cf-329cccfafa08.pdf
+   */
   public get19115Incidents(
     request: HotlineGetIncidentsRequest
   ): Promise<HotlineGetIncidentsResponse> {
     return this.axiosInstance.get("/action/19115v2_incidents", request);
   }
 
+  /**
+   * EN: Get scheduled sport activities
+   * PL: API umożliwia odczyt zaplanowanych zajęć sportowych w Warszawie
+   *
+   * https://api.um.warszawa.pl/files/258906a5-343d-4e32-8eac-713998967eec.pdf
+   */
   public getSportActivities(
     request?: AxiosRequestConfig
   ): Promise<SportActivitiesResponse> {
@@ -249,7 +278,12 @@ export class GovernmentService extends BaseService {
       },
     });
   }
-
+  /**
+   * EN: Get scheduled city events
+   * PL: API umożliwia odczyt zaplanowanych wydarzeń w Warszawie
+   *
+   * https://api.um.warszawa.pl/files/7a02689b-b40f-4b15-96f1-a551534d6758.pdf
+   */
   public getEvents(request?: AxiosRequestConfig): Promise<EventsResponse> {
     return this.axiosInstance.get("/action/events_calendar", {
       ...request,
@@ -258,7 +292,13 @@ export class GovernmentService extends BaseService {
       },
     });
   }
-
+  /**
+   * EN: Get data of public consultations from https://konsultacje.um.warszawa.pl
+   * PL: API umożliwia pobranie danych na temat aktualnych 
+   * konsultacji społecznych opublikowanych nastronie https://konsultacje.um.warszawa.pl
+   *
+   * https://api.um.warszawa.pl/files/bd9ba5a5-d1a5-4edc-9f21-ab18efaf4e96.pdf
+   */
   public getPublicConsultations(
     request?: AxiosRequestConfig
   ): Promise<PublicConsultationsResponse> {

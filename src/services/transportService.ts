@@ -1,4 +1,3 @@
-import { AxiosRequestConfig } from "axios";
 import { Value, WFSStoreBaseRequest } from "../utils/types";
 import { BaseService } from "../utils/helpers";
 import {

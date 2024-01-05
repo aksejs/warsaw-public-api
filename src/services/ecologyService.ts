@@ -133,6 +133,12 @@ interface ForestsRecord {
 }
 
 export class EcologyService extends BaseService {
+  /**
+   * EN: Info from SegregujNa5.um.warszawa.pl
+   * PL: API udostępnia informacje zawarte w wyszukiwarce SegregujNa5.um.warszawa.pl.
+   *
+   * https://api.um.warszawa.pl/files/43e7db4f-7b12-404e-8a0d-b659c304ff9d.pdf
+   */
   public getMunicipalWastes(requestParams?: DataStorageBaseRequest) {
     return dataStorageBaseHandler<MunicipalWastesRecord>(
       this.axiosInstance,
@@ -141,12 +147,24 @@ export class EcologyService extends BaseService {
     );
   }
 
+  /**
+   * EN: Get air quality data
+   * PL: API umożliwia odczyt danych na temat jakości powietrza w Warszawie oraz gminach ościennych
+   *
+   * https://api.um.warszawa.pl/files/0f6cd27d-18c4-4f2f-83f9-ed505304c6b6.pdf
+   */
   public getAirQuality() {
     return this.axiosInstance.get<AirQualityResponse>(
       "/action/air_sensors_get"
     );
   }
 
+  /**
+   * EN: Get bushes location
+   * PL: Położenie pojedynczych krzewów
+   *
+   * https://api.um.warszawa.pl/files/ee7ba488-6e45-43c7-b505-3a99c18ad6c5.pdf
+   */
   public getBushes(requestParams?: DataStorageBaseRequest) {
     return dataStorageBaseHandler<PlantRecord>(
       this.axiosInstance,
@@ -155,6 +173,12 @@ export class EcologyService extends BaseService {
     );
   }
 
+  /**
+   * EN: Get bushes (group) location
+   * PL: Położenie (obrysy) grup krzewów
+   *
+   * https://api.um.warszawa.pl/files/ee7ba488-6e45-43c7-b505-3a99c18ad6c5.pdf
+   */
   public getGroupOfBushes(requestParams: DataStorageBaseRequest) {
     return dataStorageBaseHandler<GroupOfPlantsRecord>(
       this.axiosInstance,
@@ -163,6 +187,12 @@ export class EcologyService extends BaseService {
     );
   }
 
+  /**
+   * EN: Get trees location
+   * PL: Położenie pojedynczych drzew
+   *
+   * https://api.um.warszawa.pl/files/bd15b25c-eb84-4996-a5ca-812ffa3ef666.pdf
+   */
   public getTrees(requestParams: DataStorageBaseRequest) {
     return dataStorageBaseHandler<PlantRecord>(
       this.axiosInstance,
@@ -170,7 +200,12 @@ export class EcologyService extends BaseService {
       requestParams
     );
   }
-
+  /**
+   * EN: Get trees (group) location
+   * PL: Położenie (obrysy) grup drzew
+   *
+   * https://api.um.warszawa.pl/files/bd15b25c-eb84-4996-a5ca-812ffa3ef666.pdf
+   */
   public getGroupOfTrees(requestParams: DataStorageBaseRequest) {
     return dataStorageBaseHandler<GroupOfPlantsRecord>(
       this.axiosInstance,
@@ -178,7 +213,16 @@ export class EcologyService extends BaseService {
       requestParams
     );
   }
-
+  /**
+   * EN: The dataset contains data on forest divisions and
+   * forest fragments with uniform undergrowth
+   * economic features (e.g. age, species composition).
+   * PL: Zbiór danych zawiera dane o wydzieleniach leśnych i
+   * fragmentach lasów o jednolitych pod
+   * względem gospodarczym cechach (np. wiek, skład gatunkowy).
+   *
+   * https://api.um.warszawa.pl/files/5296e09c-4ab2-41a5-ac85-81c04b9c7462.pdf
+   */
   public getForests(requestParams: DataStorageBaseRequest) {
     return dataStorageBaseHandler<ForestsRecord>(
       this.axiosInstance,
