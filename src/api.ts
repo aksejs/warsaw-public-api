@@ -1,6 +1,6 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
 import { HttpsAgent } from "agentkeepalive";
-// import * as rax from "retry-axios";
+import * as rax from "retry-axios";
 
 import {
   TransportService,
@@ -81,7 +81,7 @@ export class WarsawPublicApi {
       config.params = { ...config.params, apikey };
       config.headers = { ...defaultConfig.headers, ...(config.headers || {}) };
       this.axiosInstance = axios.create(config);
-      // rax.attach(this.axiosInstance);
+      rax.attach(this.axiosInstance);
     } else {
       this.axiosInstance = axios.create({
         ...defaultConfig,
@@ -90,7 +90,7 @@ export class WarsawPublicApi {
           apikey,
         },
       });
-      // rax.attach(this.axiosInstance);
+      rax.attach(this.axiosInstance);
     }
 
     this.transportApi = new TransportService(this.axiosInstance);

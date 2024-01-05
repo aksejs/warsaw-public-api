@@ -1,6 +1,11 @@
 import { WarsawPublicApi } from "../src/api";
 import { API_KEY } from "./setup-tests";
 
+beforeAll(() => {
+  const SECONDS = 1000;
+  jest.setTimeout(20 * SECONDS)
+})
+
 afterEach(() => {
   jest.clearAllMocks();
 });
