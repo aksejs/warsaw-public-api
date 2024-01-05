@@ -2,8 +2,18 @@
   "name": "warsaw-public-api",
   "version": "1.0.0",
   "description": "Unofficial Node.js sdk for Warsaw public API",
+  "source": "./src/index.ts",
   "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
   "scripts": {
+    "build": "tsc",
     "test": "jest"
   },
   "repository": {
@@ -13,7 +23,7 @@
   "author": "aksejs",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/aksejs/warsaw-public-api/issues"
+    "url": "https://githaub.com/aksejs/warsaw-public-api/issues"
   },
   "homepage": "https://github.com/aksejs/warsaw-public-api#readme",
   "devDependencies": {
@@ -24,14 +34,12 @@
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
     "typedoc": "^0.25.4",
-    "typescript": "^5.3.3"
+    "typescript": "^5.3.3",
+    "dotenv": "^16.3.1"
   },
   "dependencies": {
     "agentkeepalive": "^4.5.0",
     "axios": "^1.6.2",
-    "axios-debug-log": "^1.0.0",
-    "axios-logger": "^2.7.1",
-    "dotenv": "^16.3.1",
     "retry-axios": "^3.1.3"
   }
 }
