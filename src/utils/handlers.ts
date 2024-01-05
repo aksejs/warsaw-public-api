@@ -1,7 +1,5 @@
 import { AxiosInstance, AxiosRequestConfig } from "axios";
-import { GeoParams, Geometry, WFSStoreBaseResponse } from "./types";
-
-export type WFSStoreBaseRequest = GeoParams;
+import { WFSStoreBaseRequest, WFSStoreBaseResponse } from "./types";
 
 export interface DBStoreBaseRequest extends Partial<AxiosRequestConfig> {
   page?: number;
@@ -15,13 +13,11 @@ export interface DBStoreBaseResponse {
   }>;
 }
 
-export interface DataStorageBaseRequest extends Partial<AxiosRequestConfig> {
-  params: {
-    limit?: number;
-    q?: string;
-    filters?: {
-      [key: string]: string;
-    };
+export interface DataStorageBaseRequest {
+  limit?: number;
+  q?: string;
+  filters?: {
+    [key: string]: string;
   };
 }
 
@@ -60,4 +56,22 @@ export function dbstoreBaseHandler(
       id,
     },
   });
+}
+
+export function dataStorageBaseHandler<T>(
+  axiosInstance: AxiosInstance,
+  resourceId: string,
+  requestParams?: DBStoreBaseRequest
+) {
+  return axiosInstance.get<DataStorageBaseResponse<T>>(
+    "/action/datastore_search",
+    {
+      params: {
+        ...requestParams,
+        resource_id: resourceId,
+        // Cause an error, if attaching the apikey, dunno why ><
+        apikey: null,
+      },
+    }
+  );
 }

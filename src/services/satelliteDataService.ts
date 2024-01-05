@@ -1,7 +1,7 @@
 import { AxiosRequestConfig } from "axios";
-import { WFSStoreBaseRequest, wfsstoreBaseHandler } from "../utils/handlers";
+import { wfsstoreBaseHandler } from "../utils/handlers";
 import { BaseService } from "../utils/helpers";
-import { WFS_IDS } from "../utils/types";
+import { WFSStoreBaseRequest, WFS_IDS } from "../utils/types";
 
 interface Shape {
   type: string;

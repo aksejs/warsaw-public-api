@@ -1,7 +1,6 @@
-import { AxiosRequestConfig } from "axios";
 import {
   DataStorageBaseRequest,
-  DataStorageBaseResponse,
+  dataStorageBaseHandler,
 } from "../utils/handlers";
 import { BaseService } from "../utils/helpers";
 import { RESOURCE_IDS } from "../utils/types";
@@ -134,78 +133,57 @@ interface ForestsRecord {
 }
 
 export class EcologyService extends BaseService {
-  public getMunicipalWastes(
-    request: DataStorageBaseRequest
-  ): Promise<DataStorageBaseResponse<MunicipalWastesRecord>> {
-    return this.axiosInstance.get("datastore_search", {
-      ...request,
-      params: {
-        ...request.params,
-        resource_id: RESOURCE_IDS.MUNICIPAL_WASTES,
-      },
-    });
+  public getMunicipalWastes(requestParams?: DataStorageBaseRequest) {
+    return dataStorageBaseHandler<MunicipalWastesRecord>(
+      this.axiosInstance,
+      RESOURCE_IDS.MUNICIPAL_WASTES,
+      requestParams
+    );
   }
 
-  public getAirQuality(
-    request?: AxiosRequestConfig
-  ): Promise<AirQualityResponse> {
-    return this.axiosInstance.get("/action/air_sensors_get", {
-      ...request,
-    });
+  public getAirQuality() {
+    return this.axiosInstance.get<AirQualityResponse>(
+      "/action/air_sensors_get"
+    );
   }
 
-  public getBushes(
-    request: DataStorageBaseRequest
-  ): Promise<DataStorageBaseResponse<PlantRecord>> {
-    return this.axiosInstance.get("/action/datastore_search", {
-      params: {
-        ...request.params,
-        resource_id: RESOURCE_IDS.BUSHES,
-      },
-    });
+  public getBushes(requestParams?: DataStorageBaseRequest) {
+    return dataStorageBaseHandler<PlantRecord>(
+      this.axiosInstance,
+      RESOURCE_IDS.BUSHES,
+      requestParams
+    );
   }
 
-  public getGroupOfBushes(
-    request: DataStorageBaseRequest
-  ): Promise<DataStorageBaseResponse<GroupOfPlantsRecord>> {
-    return this.axiosInstance.get("/action/datastore_search", {
-      params: {
-        ...request.params,
-        resource_id: RESOURCE_IDS.GROUP_OF_BUSHES,
-      },
-    });
+  public getGroupOfBushes(requestParams: DataStorageBaseRequest) {
+    return dataStorageBaseHandler<GroupOfPlantsRecord>(
+      this.axiosInstance,
+      RESOURCE_IDS.GROUP_OF_BUSHES,
+      requestParams
+    );
   }
 
-  public getTrees(
-    request: DataStorageBaseRequest
-  ): Promise<DataStorageBaseResponse<PlantRecord>> {
-    return this.axiosInstance.get("/action/datastore_search", {
-      params: {
-        ...request.params,
-        resource_id: RESOURCE_IDS.TREES,
-      },
-    });
+  public getTrees(requestParams: DataStorageBaseRequest) {
+    return dataStorageBaseHandler<PlantRecord>(
+      this.axiosInstance,
+      RESOURCE_IDS.TREES,
+      requestParams
+    );
   }
 
-  public getGroupOfTrees(
-    request: DataStorageBaseRequest
-  ): Promise<DataStorageBaseResponse<GroupOfPlantsRecord>> {
-    return this.axiosInstance.get("/action/datastore_search", {
-      params: {
-        ...request.params,
-        resource_id: RESOURCE_IDS.GROUP_OF_TREES,
-      },
-    });
+  public getGroupOfTrees(requestParams: DataStorageBaseRequest) {
+    return dataStorageBaseHandler<GroupOfPlantsRecord>(
+      this.axiosInstance,
+      RESOURCE_IDS.GROUP_OF_TREES,
+      requestParams
+    );
   }
 
-  public getForests(
-    request: DataStorageBaseRequest
-  ): Promise<DataStorageBaseResponse<ForestsRecord>> {
-    return this.axiosInstance.get("/action/datastore_search", {
-      params: {
-        ...request.params,
-        resource_id: RESOURCE_IDS.FORESTS,
-      },
-    });
+  public getForests(requestParams: DataStorageBaseRequest) {
+    return dataStorageBaseHandler<ForestsRecord>(
+      this.axiosInstance,
+      RESOURCE_IDS.FORESTS,
+      requestParams
+    );
   }
 }

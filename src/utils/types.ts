@@ -22,7 +22,7 @@ export interface IGeometry {
   properties: Value[];
 }
 
-export type GeoParams = RequireAtLeastOne<
+export type WFSStoreBaseRequest = RequireAtLeastOne<
   {
     limit?: number;
     circle?: string;

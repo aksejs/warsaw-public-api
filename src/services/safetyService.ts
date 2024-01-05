@@ -1,9 +1,8 @@
-import { AxiosRequestConfig } from "axios";
 import { BaseService } from "../utils/helpers";
-import { WFSStoreBaseRequest, wfsstoreBaseHandler } from "../utils/handlers";
-import { WFS_IDS } from "../utils/types";
+import { wfsstoreBaseHandler } from "../utils/handlers";
+import { WFSStoreBaseRequest, WFS_IDS } from "../utils/types";
 
-interface DefibrillatorsRequest extends AxiosRequestConfig {
+interface DefibrillatorsRequest {
   defibrillator_id?: string;
 }
 
@@ -36,15 +35,15 @@ interface DefibrillatorLocationResponse {
 }
 
 export class SafetyService extends BaseService {
-  public getDefibrillator(
-    request: DefibrillatorsRequest
-  ): Promise<DefibrillatorLocationResponse> {
-    return this.axiosInstance.get("/action/aed_get", {
-      ...request,
-      params: {
-        ...request.params,
-      },
-    });
+  public getDefibrillator(requestParams: DefibrillatorsRequest) {
+    return this.axiosInstance.get<DefibrillatorLocationResponse>(
+      "/action/aed_get",
+      {
+        params: {
+          ...requestParams,
+        },
+      }
+    );
   }
 
   public getPoliceDepartments(request: WFSStoreBaseRequest) {

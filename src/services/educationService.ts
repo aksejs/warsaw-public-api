@@ -1,6 +1,6 @@
 import {
   DataStorageBaseRequest,
-  DataStorageBaseResponse,
+  dataStorageBaseHandler,
 } from "../utils/handlers";
 import { BaseService } from "../utils/helpers";
 import { Field, RESOURCE_IDS } from "../utils/types";
@@ -122,111 +122,75 @@ export interface ComputersPurposesResponse {
 }
 
 export class EducationService extends BaseService {
-  public getInternetAccess(
-    request: DataStorageBaseRequest
-  ): Promise<DataStorageBaseResponse<InternetAccessRecord>> {
-    return this.axiosInstance.get("/action/datastore_search", {
-      ...request,
-      params: {
-        ...request.params,
-        resource_id: RESOURCE_IDS.INTERNET_ACCESS,
-      },
-    }) as Promise<DataStorageBaseResponse<InternetAccessRecord>>;
+  public getInternetAccess(requestParams: DataStorageBaseRequest) {
+    return dataStorageBaseHandler<InternetAccessRecord>(
+      this.axiosInstance,
+      RESOURCE_IDS.INTERNET_ACCESS,
+      requestParams
+    );
   }
 
-  public getComputersPurposes(
-    request: DataStorageBaseRequest
-  ): Promise<DataStorageBaseResponse<ComputersPurposesRecord>> {
-    return this.axiosInstance.get("/action/datastore_search", {
-      ...request,
-      params: {
-        ...request.params,
-        resource_id: RESOURCE_IDS.INTERNET_ACCESS,
-      },
-    }) as Promise<DataStorageBaseResponse<ComputersPurposesRecord>>;
+  public getComputersPurposes(requestParams: DataStorageBaseRequest) {
+    return dataStorageBaseHandler<ComputersPurposesRecord>(
+      this.axiosInstance,
+      RESOURCE_IDS.COMPUTER_PUPROSES,
+      requestParams
+    );
   }
 
-  public getSchoolStatistics(
-    request: DataStorageBaseRequest
-  ): Promise<DataStorageBaseResponse<StatisticsRecord>> {
-    return this.axiosInstance.get("/action/datastore_search", {
-      ...request,
-      params: {
-        ...request.params,
-        resource_id: RESOURCE_IDS.SCHOOL_STATISTICS,
-      },
-    }) as Promise<DataStorageBaseResponse<StatisticsRecord>>;
+  public getSchoolStatistics(requestParams: DataStorageBaseRequest) {
+    return dataStorageBaseHandler<StatisticsRecord>(
+      this.axiosInstance,
+      RESOURCE_IDS.SCHOOL_STATISTICS,
+      requestParams
+    );
   }
 
-  public getSchoolStatisticsByChilds(
-    request: DataStorageBaseRequest
-  ): Promise<DataStorageBaseResponse<StatisticsRecord>> {
-    return this.axiosInstance.get("/action/datastore_search", {
-      ...request,
-      params: {
-        ...request.params,
-        resource_id: RESOURCE_IDS.SCHOOL_STATISTICS_CHILDRENS,
-      },
-    }) as Promise<DataStorageBaseResponse<StatisticsRecord>>;
+  public getSchoolStatisticsByChilds(requestParams: DataStorageBaseRequest) {
+    return dataStorageBaseHandler<StatisticsRecord>(
+      this.axiosInstance,
+      RESOURCE_IDS.SCHOOL_STATISTICS_CHILDRENS,
+      requestParams
+    );
   }
 
-  public getSchoolStatisticsByYouth(
-    request: DataStorageBaseRequest
-  ): Promise<DataStorageBaseResponse<StatisticsRecord>> {
-    return this.axiosInstance.get("/action/datastore_search", {
-      ...request,
-      params: {
-        ...request.params,
-        resource_id: RESOURCE_IDS.SCHOOL_STATISTICS_YOUTH,
-      },
-    }) as Promise<DataStorageBaseResponse<StatisticsRecord>>;
+  public getSchoolStatisticsByYouth(requestParams: DataStorageBaseRequest) {
+    return dataStorageBaseHandler<StatisticsRecord>(
+      this.axiosInstance,
+      RESOURCE_IDS.SCHOOL_STATISTICS_YOUTH,
+      requestParams
+    );
   }
 
-  public getSchoolStatisticsByAdults(
-    request: DataStorageBaseRequest
-  ): Promise<DataStorageBaseResponse<StatisticsRecord>> {
-    return this.axiosInstance.get("/action/datastore_search", {
-      ...request,
-      params: {
-        ...request.params,
-        resource_id: RESOURCE_IDS.SCHOOL_STATISTICS_ADULTS,
-      },
-    }) as Promise<DataStorageBaseResponse<StatisticsRecord>>;
+  public getSchoolStatisticsByAdults(requestParams: DataStorageBaseRequest) {
+    return dataStorageBaseHandler<StatisticsRecord>(
+      this.axiosInstance,
+      RESOURCE_IDS.SCHOOL_STATISTICS_ADULTS,
+      requestParams
+    );
   }
 
-  public getSchoolStatisticsNoCategory(
-    request: DataStorageBaseRequest
-  ): Promise<DataStorageBaseResponse<StatisticsRecord>> {
-    return this.axiosInstance.get("/action/datastore_search", {
-      ...request,
-      params: {
-        ...request.params,
-        resource_id: RESOURCE_IDS.SCHOOL_STATISTICS_NO_CATEGORY,
-      },
-    }) as Promise<DataStorageBaseResponse<StatisticsRecord>>;
+  public getSchoolStatisticsNoCategory(requestParams: DataStorageBaseRequest) {
+    return dataStorageBaseHandler<StatisticsRecord>(
+      this.axiosInstance,
+      RESOURCE_IDS.SCHOOL_STATISTICS_NO_CATEGORY,
+      requestParams
+    );
   }
 
-  public getEducationRooms(
-    request: DataStorageBaseRequest
-  ): Promise<DataStorageBaseResponse<EducationRoomsRecord>> {
-    return this.axiosInstance.get("/action/datastore_search", {
-      ...request,
-      params: {
-        ...request.params,
-        resource_id: RESOURCE_IDS.EDUCATION_ROOMS,
-      },
-    });
+  public getEducationRooms(requestParams: DataStorageBaseRequest) {
+    return dataStorageBaseHandler<EducationRoomsRecord>(
+      this.axiosInstance,
+      RESOURCE_IDS.EDUCATION_ROOMS,
+      requestParams
+    );
   }
 
-  public getFacilities(
-    request: DataStorageBaseRequest
-  ): Promise<DataStorageBaseResponse<Record>> {
-    return this.axiosInstance.get("/action/datastore_search", {
-      ...request,
-      params: {
-        ...request.params,
-        resource_id: RESOURCE_IDS.EDUCATION_FACILITIES,
-      },
-    });
+  public getFacilities(requestParams: DataStorageBaseRequest) {
+    return dataStorageBaseHandler<Record>(
+      this.axiosInstance,
+      RESOURCE_IDS.EDUCATION_FACILITIES,
+      requestParams
+    );
   }
 }

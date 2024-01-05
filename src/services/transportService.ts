@@ -1,9 +1,8 @@
 import { AxiosRequestConfig } from "axios";
-import { Value } from "../utils/types";
+import { Value, WFSStoreBaseRequest } from "../utils/types";
 import { BaseService } from "../utils/helpers";
 import {
   DBStoreBaseRequest,
-  WFSStoreBaseRequest,
   dbstoreBaseHandler,
   wfsstoreBaseHandler,
 } from "../utils/handlers";
@@ -70,6 +69,12 @@ interface DictionaryResponse {
 }
 
 export class TransportService extends BaseService {
+  /**
+   * EN: Get stops timetables
+   * PL: Pobranie	zespołu	przystanków
+   *
+   * https://api.um.warszawa.pl/files/91f49cb2-9ffb-41bd-8e25-5204bb9da990.pdf
+   */
   public getTimetableStops(request: ZTMTimetableRequest) {
     return this.axiosInstance.get<ZTMTimetableResponse>(
       "/action/dbtimetable_get",
@@ -82,6 +87,12 @@ export class TransportService extends BaseService {
     );
   }
 
+  /**
+   * EN: Get timetable lines
+   * PL: Pobranie	linii	dostępnych na	przystanku
+   *
+   * https://api.um.warszawa.pl/files/91f49cb2-9ffb-41bd-8e25-5204bb9da990.pdf
+   */
   public getTimetableLines(request: ZTMTimetableRequest) {
     return this.axiosInstance.get<ZTMTimetableResponse>(
       "/action/dbtimetable_get",
@@ -94,6 +105,12 @@ export class TransportService extends BaseService {
     );
   }
 
+  /**
+   * EN: Get timetable for the line
+   * PL: Pobranie	rozkładu	jazdy	dla	linii
+   *
+   * https://api.um.warszawa.pl/files/91f49cb2-9ffb-41bd-8e25-5204bb9da990.pdf
+   */
   public getTimetableSchedules(request: ZTMTimetableRequest) {
     return this.axiosInstance.get<ZTMTimetableResponse>(
       "/action/dbtimetable_get",
@@ -106,6 +123,12 @@ export class TransportService extends BaseService {
     );
   }
 
+  /**
+   * EN: Get bike stop stations. Returns vector map represented as JSON
+   * PL: Mapy wektorowe, w formie obiektów JSON z lokalizacją stacji rowerów
+   *
+   * https://api.um.warszawa.pl/files/10d27093-8fc1-4416-814d-ff40c5631fcb.pdf
+   */
   public getTransportBikeStations(request: WFSStoreBaseRequest) {
     return wfsstoreBaseHandler(
       this.axiosInstance,
@@ -114,6 +137,12 @@ export class TransportService extends BaseService {
     );
   }
 
+  /**
+   * EN: Get bike routes. Returns vector map represented as JSON
+   * PL: Mapy wektorowe, w formie obiektów JSON z lokalizacją tras rowerowych
+   *
+   * https://api.um.warszawa.pl/files/10d27093-8fc1-4416-814d-ff40c5631fcb.pdf
+   */
   public getTransportBikeRoutes(request: WFSStoreBaseRequest) {
     return wfsstoreBaseHandler(
       this.axiosInstance,
@@ -122,6 +151,12 @@ export class TransportService extends BaseService {
     );
   }
 
+  /**
+   * EN: Get parkinkgs P+R. Returns vector map represented as JSON
+   * PL: Mapy wektorowe, w formie obiektów JSON z lokalizacją parkingów P+R
+   *
+   * https://api.um.warszawa.pl/files/10d27093-8fc1-4416-814d-ff40c5631fcb.pdf
+   */
   public getTransportParkings(request: WFSStoreBaseRequest) {
     return wfsstoreBaseHandler(
       this.axiosInstance,
@@ -130,6 +165,12 @@ export class TransportService extends BaseService {
     );
   }
 
+  /**
+   * EN: Get metro entrances. Returns vector map represented as JSON
+   * PL: Mapy wektorowe, w formie obiektów JSON z lokalizacją wejść do metra
+   *
+   * https://api.um.warszawa.pl/files/10d27093-8fc1-4416-814d-ff40c5631fcb.pdf
+   */
   public getTransportMetroEntrances(request: WFSStoreBaseRequest) {
     return wfsstoreBaseHandler(
       this.axiosInstance,
@@ -154,12 +195,26 @@ export class TransportService extends BaseService {
     );
   }
 
+  /**
+   * EN: Get data of the current routes of Warsaw Public Transport
+   * PL: API umożliwia odczyt danych na temat bieżących tras przejazdu pojazdów Warszawskiego Transportu
+   * Publicznego (WTP)
+   *
+   * https://api.um.warszawa.pl/files/495fc3e8-a32e-4c32-a4ca-0e3c9a4eed4f.pdf
+   */
   public getUrbanTransportRoutes() {
     return this.axiosInstance.get<UrbanTransportRoutesResponse>(
       "/action/public_transport_routes"
     );
   }
 
+  /**
+   * EN: Get dictionary of terms used in other endpoints related to Warsaw Public Transport
+   * PL: API umożliwia odczyt słownika pojęć używanych w innych endpointach dotyczących Warszawskiego
+   * Transportu Publicznego (WTP).
+   *
+   * https://api.um.warszawa.pl/files/4fd88d4a-3389-48c4-a8c2-b02c2f0d9dd1.pdf
+   */
   public getDictionary() {
     return this.axiosInstance.get<DictionaryResponse>(
       "/action/public_transport_dictionary"

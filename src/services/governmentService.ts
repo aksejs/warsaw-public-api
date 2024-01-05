@@ -1,7 +1,7 @@
 import { AxiosRequestConfig } from "axios";
-import { WFSStoreBaseRequest, wfsstoreBaseHandler } from "../utils/handlers";
+import { wfsstoreBaseHandler } from "../utils/handlers";
 import { BaseService } from "../utils/helpers";
-import { OTHER_IDS, WFS_IDS } from "../utils/types";
+import { OTHER_IDS, WFSStoreBaseRequest, WFS_IDS } from "../utils/types";
 
 interface HotlineCategoriesResult {
   subcategoryId: string;

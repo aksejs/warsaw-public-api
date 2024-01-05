@@ -1,21 +1,26 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
+import { HttpsAgent } from "agentkeepalive";
 // import * as rax from "retry-axios";
 
-import { TransportService } from "./services/transportService";
-import { EducationService } from "./services/educationService";
-import { EcologyService } from "./services/ecologyService";
-import { SatelliteDataService } from "./services/satelliteDataService";
-import { GovernmentService } from "./services/governmentService";
-import { SafetyService } from "./services/safetyService";
-import { CultureService } from "./services/cultureService";
-import { HttpsAgent } from "agentkeepalive";
-import { RealtimeService } from "./services/realtimeService";
+import {
+  TransportService,
+  EducationService,
+  EcologyService,
+  SafetyService,
+  GovernmentService,
+  SatelliteDataService,
+  CultureService,
+  RealtimeService,
+} from "./services";
 
 export const API_URL = "https://api.um.warszawa.pl/api";
 
 export type WarsawPublicApiOptions = {
+  //** {required} Api key to access */
   apikey: string;
+  /** AxiosInstance to be used by client. Provide one of axiosInstance or config. */
   axiosInstance?: AxiosInstance;
+  /** Config used to create AxiosInstance. Provide one of axiosInstance or config. */
   config?: AxiosRequestConfig;
 };
 
@@ -27,6 +32,26 @@ const defaultConfig: AxiosRequestConfig = {
   httpsAgent: defaultHttpsAgent,
 };
 
+/**
+ * WarsawPublicApi is a light wrapper around API methods providing shared configuration for Axios
+ * settings such as retry logic using the default retry-axios settings and gzip encoding.
+ *
+ * ### Instantiate with defaults
+ * ```
+ * const api = WarsawPublicApi()
+ * ```
+ *
+ * ### Instantiate with config
+ * ```
+ * const api = WarsawPublicApi({config})
+ * ```
+ *
+ * ### Instantiate with axiosInstance **Advanced**
+ * ```
+ * const axiosInstance = axios.create(config)
+ * const api = WarsawPublicApi({axiosInstance})
+ * ```
+ */
 export class WarsawPublicApi {
   private readonly axiosInstance: AxiosInstance;
 
