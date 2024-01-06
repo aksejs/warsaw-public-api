@@ -54,16 +54,12 @@ interface HotlinePostIncidentsResponse {
 }
 
 interface HotlinePostIncidentsRequest extends AxiosRequestConfig {
-  params: {
-    data: PostRequestBody;
-  };
+  data: PostRequestBody;
 }
 
 interface HotlineGetIncidentsRequest extends AxiosRequestConfig {
-  params: {
-    incidentId: string;
-    history: boolean;
-  };
+  incidentId: string;
+  history: boolean;
 }
 
 interface ResultData {
@@ -220,8 +216,12 @@ export class GovernmentService extends BaseService {
    *
    * https://api.um.warszawa.pl/files/1590c3a8-eb00-400b-92db-7b5a57decb50.pdf
    */
-  public getUrzads(request: WFSStoreBaseRequest) {
-    return wfsstoreBaseHandler(this.axiosInstance, request, WFS_IDS.URZADS);
+  public getUrzads(requestParams: WFSStoreBaseRequest) {
+    return wfsstoreBaseHandler(
+      this.axiosInstance,
+      WFS_IDS.URZADS,
+      requestParams
+    );
   }
 
   /**
@@ -230,10 +230,10 @@ export class GovernmentService extends BaseService {
    *
    * https://api.um.warszawa.pl/files/7da29867-40cb-4d6a-b1cf-329cccfafa08.pdf
    */
-  public get19115Categories(
-    request?: AxiosRequestConfig
-  ): Promise<HotlineCategoriesResponse> {
-    return this.axiosInstance.get("/action/19115v2_categories", request);
+  public get19115Categories() {
+    return this.axiosInstance.get<HotlineCategoriesResponse>(
+      "/action/19115v2_categories"
+    );
   }
 
   /**
@@ -242,12 +242,11 @@ export class GovernmentService extends BaseService {
    * https://api.um.warszawa.pl/files/7da29867-40cb-4d6a-b1cf-329cccfafa08.pdf
    */
   public post19115Incidents(
-    request?: HotlinePostIncidentsRequest
+    requestBody?: HotlinePostIncidentsRequest
   ): Promise<HotlinePostIncidentsResponse> {
     return this.axiosInstance.post(
       "/action/19115v2_incidents",
-      JSON.stringify(request?.params.data),
-      request
+      JSON.stringify(requestBody?.data)
     );
   }
 
@@ -257,9 +256,13 @@ export class GovernmentService extends BaseService {
    * https://api.um.warszawa.pl/files/7da29867-40cb-4d6a-b1cf-329cccfafa08.pdf
    */
   public get19115Incidents(
-    request: HotlineGetIncidentsRequest
+    requestParams: HotlineGetIncidentsRequest
   ): Promise<HotlineGetIncidentsResponse> {
-    return this.axiosInstance.get("/action/19115v2_incidents", request);
+    return this.axiosInstance.get("/action/19115v2_incidents", {
+      params: {
+        ...requestParams,
+      },
+    });
   }
 
   /**
@@ -268,15 +271,15 @@ export class GovernmentService extends BaseService {
    *
    * https://api.um.warszawa.pl/files/258906a5-343d-4e32-8eac-713998967eec.pdf
    */
-  public getSportActivities(
-    request?: AxiosRequestConfig
-  ): Promise<SportActivitiesResponse> {
-    return this.axiosInstance.get("/action/events_sport", {
-      ...request,
-      params: {
-        id: OTHER_IDS.SPORT_ACTIVITIES,
-      },
-    });
+  public getSportActivities() {
+    return this.axiosInstance.get<SportActivitiesResponse>(
+      "/action/events_sport",
+      {
+        params: {
+          id: OTHER_IDS.SPORT_ACTIVITIES,
+        },
+      }
+    );
   }
   /**
    * EN: Get scheduled city events
@@ -284,9 +287,8 @@ export class GovernmentService extends BaseService {
    *
    * https://api.um.warszawa.pl/files/7a02689b-b40f-4b15-96f1-a551534d6758.pdf
    */
-  public getEvents(request?: AxiosRequestConfig): Promise<EventsResponse> {
-    return this.axiosInstance.get("/action/events_calendar", {
-      ...request,
+  public getEvents() {
+    return this.axiosInstance.get<EventsResponse>("/action/events_calendar", {
       params: {
         id: OTHER_IDS.EVENTS,
       },
@@ -294,14 +296,14 @@ export class GovernmentService extends BaseService {
   }
   /**
    * EN: Get data of public consultations from https://konsultacje.um.warszawa.pl
-   * PL: API umożliwia pobranie danych na temat aktualnych 
+   * PL: API umożliwia pobranie danych na temat aktualnych
    * konsultacji społecznych opublikowanych nastronie https://konsultacje.um.warszawa.pl
    *
    * https://api.um.warszawa.pl/files/bd9ba5a5-d1a5-4edc-9f21-ab18efaf4e96.pdf
    */
-  public getPublicConsultations(
-    request?: AxiosRequestConfig
-  ): Promise<PublicConsultationsResponse> {
-    return this.axiosInstance.get("/action/public_consultation", request);
+  public getPublicConsultations() {
+    return this.axiosInstance.get<PublicConsultationsResponse>(
+      "/action/public_consultation"
+    );
   }
 }

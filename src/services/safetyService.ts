@@ -58,8 +58,8 @@ export class SafetyService extends BaseService {
   public getPoliceDepartments(request: WFSStoreBaseRequest) {
     return wfsstoreBaseHandler(
       this.axiosInstance,
-      request,
-      WFS_IDS.POLICE_DEPARTMENTS
+      WFS_IDS.POLICE_DEPARTMENTS,
+      request
     );
   }
 }

@@ -34,12 +34,12 @@ export interface DataStorageBaseResponse<T> {
 
 export function wfsstoreBaseHandler<T = WFSStoreBaseResponse>(
   axiosInstance: AxiosInstance,
-  params: WFSStoreBaseRequest,
-  id: string
+  id: string,
+  requestParams: WFSStoreBaseRequest
 ) {
   return axiosInstance.get<T>("/action/wfsstore_get", {
     params: {
-      ...params,
+      ...requestParams,
       id,
     },
   });
@@ -48,11 +48,11 @@ export function wfsstoreBaseHandler<T = WFSStoreBaseResponse>(
 export function dbstoreBaseHandler(
   axiosInstance: AxiosInstance,
   id: string,
-  request?: DBStoreBaseRequest
+  requestParams?: DBStoreBaseRequest
 ) {
   return axiosInstance.get<DBStoreBaseResponse>("/action/dbstore_get", {
     params: {
-      ...request,
+      ...requestParams,
       id,
     },
   });

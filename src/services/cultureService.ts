@@ -13,8 +13,8 @@ export class CultureService extends BaseService {
   public getTheatres(requestParams: WFSStoreBaseRequest) {
     return wfsstoreBaseHandler(
       this.axiosInstance,
-      requestParams,
-      WFS_IDS.URZADS
+      WFS_IDS.URZADS,
+      requestParams
     );
   }
 }

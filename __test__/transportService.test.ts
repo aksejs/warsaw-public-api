@@ -3,8 +3,8 @@ import { API_KEY } from "./setup-tests";
 
 beforeAll(() => {
   const SECONDS = 1000;
-  jest.setTimeout(20 * SECONDS)
-})
+  jest.setTimeout(20 * SECONDS);
+});
 
 afterEach(() => {
   jest.clearAllMocks();
@@ -52,11 +52,6 @@ describe("transportService test", () => {
   });
 
   it("Should return routes with first line ", async () => {
-    const res = await api.transportApi.getUrbanTransportRoutes();
-    expect(res.data.result).toHaveProperty("1");
-  });
-
-  it("should return coords more than 0", async () => {
     const res = await api.transportApi.getUrbanTransportRoutes();
     expect(res.data.result).toHaveProperty("1");
   });
