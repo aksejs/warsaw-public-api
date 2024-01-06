@@ -128,11 +128,11 @@ export class TransportService extends BaseService {
    *
    * https://api.um.warszawa.pl/files/10d27093-8fc1-4416-814d-ff40c5631fcb.pdf
    */
-  public getTransportBikeStations(request: WFSStoreBaseRequest) {
+  public getTransportBikeStations(requestParams: WFSStoreBaseRequest) {
     return wfsstoreBaseHandler(
       this.axiosInstance,
-      request,
-      TransportIDS.BIKE_STATIONS
+      TransportIDS.BIKE_STATIONS,
+      requestParams
     );
   }
 
@@ -142,11 +142,11 @@ export class TransportService extends BaseService {
    *
    * https://api.um.warszawa.pl/files/10d27093-8fc1-4416-814d-ff40c5631fcb.pdf
    */
-  public getTransportBikeRoutes(request: WFSStoreBaseRequest) {
+  public getTransportBikeRoutes(requestParams: WFSStoreBaseRequest) {
     return wfsstoreBaseHandler(
       this.axiosInstance,
-      request,
-      TransportIDS.BIKE_ROUTES
+      TransportIDS.BIKE_ROUTES,
+      requestParams
     );
   }
 
@@ -156,11 +156,11 @@ export class TransportService extends BaseService {
    *
    * https://api.um.warszawa.pl/files/10d27093-8fc1-4416-814d-ff40c5631fcb.pdf
    */
-  public getTransportParkings(request: WFSStoreBaseRequest) {
+  public getTransportParkings(requestParams: WFSStoreBaseRequest) {
     return wfsstoreBaseHandler(
       this.axiosInstance,
-      request,
-      TransportIDS.PARKINGS
+      TransportIDS.PARKINGS,
+      requestParams
     );
   }
 
@@ -170,11 +170,11 @@ export class TransportService extends BaseService {
    *
    * https://api.um.warszawa.pl/files/10d27093-8fc1-4416-814d-ff40c5631fcb.pdf
    */
-  public getTransportMetroEntrances(request: WFSStoreBaseRequest) {
+  public getTransportMetroEntrances(requestParams: WFSStoreBaseRequest) {
     return wfsstoreBaseHandler(
       this.axiosInstance,
-      request,
-      TransportIDS.METRO_ENTRANCES
+      TransportIDS.METRO_ENTRANCES,
+      requestParams
     );
   }
 
