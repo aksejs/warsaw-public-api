@@ -10,10 +10,10 @@ export class CultureService extends BaseService {
    *
    * https://api.um.warszawa.pl/files/a6c9f4b5-3c54-4e38-95cc-97bb9fca859e.pdf
    */
-  public getTheatres(requestParams: WFSStoreBaseRequest) {
+  public getTheatres(requestParams?: WFSStoreBaseRequest) {
     return wfsstoreBaseHandler(
       this.axiosInstance,
-      WFS_IDS.URZADS,
+      WFS_IDS.THEATRES,
       requestParams
     );
   }

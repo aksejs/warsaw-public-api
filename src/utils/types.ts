@@ -22,16 +22,13 @@ export interface IGeometry {
   properties: Value[];
 }
 
-export type WFSStoreBaseRequest = RequireAtLeastOne<
-  {
-    /** {required} Api key to access */
-    limit?: number;
-    circle?: string;
-    bbox?: string;
-    filter?: string;
-  },
-  "bbox" | "circle" | "filter" | "limit"
->;
+export type WFSStoreBaseRequest = {
+  /** {required} Api key to access */
+  limit?: number;
+  circle?: string;
+  bbox?: string;
+  filter?: string;
+};
 
 export type Field = {
   type: string;
@@ -95,7 +92,26 @@ export enum RESOURCE_IDS {
   BUSES_AND_TRAMS = "f2e5503e-927d-4ad3-9500-4ab9e55deb59",
 }
 
+export enum ZTMTimetableIDS {
+  STOPS = "b27f4c17-5c50-4a5b-89dd236b282bc499",
+  LINES = "88cd555f-6f31-43ca-9de4-66c479ad5942",
+  SCHEDULES = "e923fa0e-d96c-43f9-ae6e60518c9f3238",
+}
+
+export enum TransportIDS {
+  BIKE_STATIONS = "8a235d27-b96a-4876-9b92-9e164940c9b6",
+  BIKE_ROUTES = "d2f0c41f-cda1-440a-8a27-f01f724529f8",
+  PARKINGS = "157648fd-a603-4861-af96-884a8e35b155",
+  METRO_ENTRANCES = "0ac7f6d1-a26b-430f-9e3d-a41c5356b9a3",
+}
+
+export enum StopsIDS {
+  STOPS_COORDS = "1c08a38c-ae09-46d2-8926-4f9d25cb0630",
+  STOP_COORDS_FOR_CURRENT_DAY = "ab75c33d-3a26-4342-b36a-6e5fef0a3ac3",
+}
+
 export enum WFS_IDS {
+  THEATRES = "e26218cb-61ec-4ccb-81cc-fd19a6fee0f8",
   EURONET_ATMS = "672729a7-5ff9-45de-8ae2-ffc87213b9a8",
   ENOM_ADRESS_POINTS = "e30b724d-0bac-4a4e-8ea8-085c136fe345",
   ENOM_STREETS = "8c05e43a-504d-4680-bb75-e240858aad5c",
@@ -103,12 +119,16 @@ export enum WFS_IDS {
   PHARMACIES = "fd137190-3d65-4306-a85e-5e97e7f29a23",
   BIKE_LINES = "07f8275c-7ae5-4b74-a429-da94dbfa28bd",
   BIKE_STOPS = "a08136ec-1037-4029-9aa5-b0d0ee0b9d88",
+  BIKE_STATIONS = "8a235d27-b96a-4876-9b92-9e164940c9b6",
+  BIKE_ROUTES = "d2f0c41f-cda1-440a-8a27-f01f724529f8",
   SOCCER_FIELDS = "9317a2dc-d08a-41bc-874d-01cc2dc88006",
   SWIMMING_POOLS = "8c34025d-df36-4507-9eae-cf714f6fc414",
   DORMITORIES = "c789b05d-31b1-4b55-970a-4d3deb923f79",
   HOTELS = "f019448f-951c-439e-bf37-c3268682752e",
   POLICE_DEPARTMENTS = "85f567f1-bb56-4657-a30e-afd80544fc7f",
   URZADS = "4e9a942e-2bf8-4c9d-ac1f-1ccc30c4f62d",
+  PARKINGS = "157648fd-a603-4861-af96-884a8e35b155",
+  METRO_ENTRANCES = "0ac7f6d1-a26b-430f-9e3d-a41c5356b9a3",
 }
 
 export enum OTHER_IDS {

@@ -1,5 +1,5 @@
 import { AxiosInstance, AxiosRequestConfig } from "axios";
-import { WFSStoreBaseRequest, WFSStoreBaseResponse } from "./types";
+import { WFSStoreBaseRequest, WFSStoreBaseResponse, WFS_IDS } from "./types";
 
 export interface DBStoreBaseRequest extends Partial<AxiosRequestConfig> {
   page?: number;
@@ -34,8 +34,8 @@ export interface DataStorageBaseResponse<T> {
 
 export function wfsstoreBaseHandler<T = WFSStoreBaseResponse>(
   axiosInstance: AxiosInstance,
-  id: string,
-  requestParams: WFSStoreBaseRequest
+  id: WFS_IDS,
+  requestParams: WFSStoreBaseRequest = {}
 ) {
   return axiosInstance.get<T>("/action/wfsstore_get", {
     params: {
