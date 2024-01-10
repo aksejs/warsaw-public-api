@@ -7,3 +7,5 @@ dotenv.config({
 });
 
 export const API_KEY = process.env.API_KEY;
+
+jest.setTimeout(20000);

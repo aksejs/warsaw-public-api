@@ -14,7 +14,7 @@ describe("ecologyService test", () => {
     apikey: API_KEY,
   });
   it("Should return list of bushes, limited to 2.", async () => {
-    const res = await api.ecologyApi.getTrees({ limit: 2 });
+    const res = await api.ecologyApi.getBushes({ limit: 2 });
 
     expect(res.data.result.records.length).toBe(2);
   });

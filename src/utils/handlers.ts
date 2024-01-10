@@ -1,5 +1,26 @@
 import { AxiosInstance, AxiosRequestConfig } from "axios";
-import { WFSStoreBaseRequest, WFSStoreBaseResponse, WFS_IDS } from "./types";
+import {
+  DBStoreIDS,
+  RESOURCE_IDS,
+  Value,
+  WFSStoreBaseRequest,
+  WFSStoreBaseResponse,
+  WFS_IDS,
+  ZTMTimetableIDS,
+} from "./types";
+
+export interface ZTMTimetableRequest {
+  name?: string;
+  busstopId?: number;
+  busstopNr?: string;
+  line?: number;
+}
+
+export interface ZTMTimetableResponse {
+  result: Array<{
+    values: Value[];
+  }>;
+}
 
 export interface DBStoreBaseRequest extends Partial<AxiosRequestConfig> {
   page?: number;
@@ -47,7 +68,7 @@ export function wfsstoreBaseHandler<T = WFSStoreBaseResponse>(
 
 export function dbstoreBaseHandler(
   axiosInstance: AxiosInstance,
-  id: string,
+  id: DBStoreIDS,
   requestParams?: DBStoreBaseRequest
 ) {
   return axiosInstance.get<DBStoreBaseResponse>("/action/dbstore_get", {
@@ -60,7 +81,7 @@ export function dbstoreBaseHandler(
 
 export function dataStorageBaseHandler<T>(
   axiosInstance: AxiosInstance,
-  resourceId: string,
+  resourceId: RESOURCE_IDS,
   requestParams?: DBStoreBaseRequest
 ) {
   return axiosInstance.get<DataStorageBaseResponse<T>>(
@@ -74,4 +95,17 @@ export function dataStorageBaseHandler<T>(
       },
     }
   );
+}
+
+export function dbTimetableBaseHandler(
+  axiosInstance: AxiosInstance,
+  id: ZTMTimetableIDS,
+  requestParams?: ZTMTimetableRequest
+) {
+  return axiosInstance.get<ZTMTimetableResponse>("/action/dbstore_get", {
+    params: {
+      ...requestParams,
+      id,
+    },
+  });
 }

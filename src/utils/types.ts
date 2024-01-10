@@ -135,3 +135,8 @@ export enum OTHER_IDS {
   SPORT_ACTIVITIES = "f458bd1b-d545-407c-bf08-7315429b6fda",
   EVENTS = "fbf95b7b-ff95-48bc-afda-a16e968cc9a6",
 }
+
+export enum DBStoreIDS {
+  STOPS_COORDS = "1c08a38c-ae09-46d2-8926-4f9d25cb0630",
+  STOP_COORDS_FOR_CURRENT_DAY = "ab75c33d-3a26-4342-b36a-6e5fef0a3ac3",
+}

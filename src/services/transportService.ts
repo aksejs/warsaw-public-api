@@ -1,41 +1,17 @@
-import { Value, WFSStoreBaseRequest } from "../utils/types";
+import {
+  DBStoreIDS,
+  WFSStoreBaseRequest,
+  WFS_IDS,
+  ZTMTimetableIDS,
+} from "../utils/types";
 import { BaseService } from "../utils/helpers";
 import {
   DBStoreBaseRequest,
+  ZTMTimetableRequest,
+  dbTimetableBaseHandler,
   dbstoreBaseHandler,
   wfsstoreBaseHandler,
 } from "../utils/handlers";
-
-export enum ZTMTimetableIDS {
-  STOPS = "b27f4c17-5c50-4a5b-89dd236b282bc499",
-  LINES = "88cd555f-6f31-43ca-9de4-66c479ad5942",
-  SCHEDULES = "e923fa0e-d96c-43f9-ae6e60518c9f3238",
-}
-
-export enum TransportIDS {
-  BIKE_STATIONS = "8a235d27-b96a-4876-9b92-9e164940c9b6",
-  BIKE_ROUTES = "d2f0c41f-cda1-440a-8a27-f01f724529f8",
-  PARKINGS = "157648fd-a603-4861-af96-884a8e35b155",
-  METRO_ENTRANCES = "0ac7f6d1-a26b-430f-9e3d-a41c5356b9a3",
-}
-
-export enum StopsIDS {
-  STOPS_COORDS = "1c08a38c-ae09-46d2-8926-4f9d25cb0630",
-  STOP_COORDS_FOR_CURRENT_DAY = "ab75c33d-3a26-4342-b36a-6e5fef0a3ac3",
-}
-
-interface ZTMTimetableRequest {
-  name?: string;
-  busstopId?: number;
-  busstopNr?: string;
-  line?: number;
-}
-
-interface ZTMTimetableResponse {
-  result: Array<{
-    values: Value[];
-  }>;
-}
 
 interface UrbanTransportRoutesResponse {
   result: {
@@ -75,14 +51,10 @@ export class TransportService extends BaseService {
    * https://api.um.warszawa.pl/files/91f49cb2-9ffb-41bd-8e25-5204bb9da990.pdf
    */
   public getTimetableStops(request: ZTMTimetableRequest) {
-    return this.axiosInstance.get<ZTMTimetableResponse>(
-      "/action/dbtimetable_get",
-      {
-        params: {
-          ...request,
-          id: ZTMTimetableIDS.STOPS,
-        },
-      }
+    return dbTimetableBaseHandler(
+      this.axiosInstance,
+      ZTMTimetableIDS.STOPS,
+      request
     );
   }
 
@@ -93,14 +65,10 @@ export class TransportService extends BaseService {
    * https://api.um.warszawa.pl/files/91f49cb2-9ffb-41bd-8e25-5204bb9da990.pdf
    */
   public getTimetableLines(request: ZTMTimetableRequest) {
-    return this.axiosInstance.get<ZTMTimetableResponse>(
-      "/action/dbtimetable_get",
-      {
-        params: {
-          ...request,
-          id: ZTMTimetableIDS.LINES,
-        },
-      }
+    return dbTimetableBaseHandler(
+      this.axiosInstance,
+      ZTMTimetableIDS.LINES,
+      request
     );
   }
 
@@ -111,14 +79,10 @@ export class TransportService extends BaseService {
    * https://api.um.warszawa.pl/files/91f49cb2-9ffb-41bd-8e25-5204bb9da990.pdf
    */
   public getTimetableSchedules(request: ZTMTimetableRequest) {
-    return this.axiosInstance.get<ZTMTimetableResponse>(
-      "/action/dbtimetable_get",
-      {
-        params: {
-          ...request,
-          id: ZTMTimetableIDS.SCHEDULES,
-        },
-      }
+    return dbTimetableBaseHandler(
+      this.axiosInstance,
+      ZTMTimetableIDS.SCHEDULES,
+      request
     );
   }
 
@@ -131,7 +95,7 @@ export class TransportService extends BaseService {
   public getTransportBikeStations(requestParams: WFSStoreBaseRequest) {
     return wfsstoreBaseHandler(
       this.axiosInstance,
-      TransportIDS.BIKE_STATIONS,
+      WFS_IDS.BIKE_STATIONS,
       requestParams
     );
   }
@@ -145,7 +109,7 @@ export class TransportService extends BaseService {
   public getTransportBikeRoutes(requestParams: WFSStoreBaseRequest) {
     return wfsstoreBaseHandler(
       this.axiosInstance,
-      TransportIDS.BIKE_ROUTES,
+      WFS_IDS.BIKE_ROUTES,
       requestParams
     );
   }
@@ -159,7 +123,7 @@ export class TransportService extends BaseService {
   public getTransportParkings(requestParams: WFSStoreBaseRequest) {
     return wfsstoreBaseHandler(
       this.axiosInstance,
-      TransportIDS.PARKINGS,
+      WFS_IDS.PARKINGS,
       requestParams
     );
   }
@@ -173,7 +137,7 @@ export class TransportService extends BaseService {
   public getTransportMetroEntrances(requestParams: WFSStoreBaseRequest) {
     return wfsstoreBaseHandler(
       this.axiosInstance,
-      TransportIDS.METRO_ENTRANCES,
+      WFS_IDS.METRO_ENTRANCES,
       requestParams
     );
   }
@@ -181,7 +145,7 @@ export class TransportService extends BaseService {
   public getStopsCoords(request?: DBStoreBaseRequest) {
     return dbstoreBaseHandler(
       this.axiosInstance,
-      StopsIDS.STOPS_COORDS,
+      DBStoreIDS.STOPS_COORDS,
       request
     );
   }
@@ -189,7 +153,7 @@ export class TransportService extends BaseService {
   public getStopsCurrent(request: DBStoreBaseRequest) {
     return dbstoreBaseHandler(
       this.axiosInstance,
-      StopsIDS.STOP_COORDS_FOR_CURRENT_DAY,
+      DBStoreIDS.STOP_COORDS_FOR_CURRENT_DAY,
       request
     );
   }
