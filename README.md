@@ -32,5 +32,7 @@ api.transportApi
 .then((res) =>  console.log(res.data.result))
 .catch((error) =>  console.log(error.response));
 ```
+## TODO
+ – adapter
 ## License
 MIT
